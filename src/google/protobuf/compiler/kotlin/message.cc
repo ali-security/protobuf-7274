@@ -129,6 +129,10 @@ void MessageGenerator::GenerateMembers(io::Printer* printer) const {
   }
 
   printer->Print(
+      "@kotlin.OptIn"
+      "(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)\n"
+      "@com.google.protobuf.kotlin.ProtoHiddenFromObjC\n");
+  printer->Print(
       "public inline fun $camelcase_name$(block: $message_kt$.Dsl.() -> "
       "kotlin.Unit): $message$ =\n"
       "  $message_kt$.Dsl._create($message$.newBuilder()).apply { block() "
