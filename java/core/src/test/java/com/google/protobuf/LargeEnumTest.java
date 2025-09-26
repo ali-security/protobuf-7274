@@ -10,13 +10,44 @@ package com.google.protobuf;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.large.openenum.edition.LargeOpenEnum;
+import com.google.protobuf.large.openenum.edition.LargeOpenEnumParent;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class LargeEnumTest {
+
+  @Test
+  public void testLargeEnumRoundTrip() throws Exception {
+    LargeOpenEnumParent msg =
+        LargeOpenEnumParent.newBuilder()
+            .addE(LargeOpenEnum.LARGE_ENUM1)
+            .addE(LargeOpenEnum.LARGE_ENUM1_ALIAS)
+            .addE(LargeOpenEnum.LARGE_ENUM1060)
+            .build();
+    LargeOpenEnumParent roundTrip = LargeOpenEnumParent.parseFrom(msg.toByteArray());
+    assertThat(roundTrip.getEList()).isEqualTo(msg.getEList());
+  }
+
+  @Test
+  public void testLargeEnumReflectiveAccess() throws Exception {
+    LargeOpenEnumParent msg =
+        LargeOpenEnumParent.newBuilder()
+            .addE(LargeOpenEnum.LARGE_ENUM1)
+            .addE(LargeOpenEnum.LARGE_ENUM1_ALIAS)
+            .addE(LargeOpenEnum.LARGE_ENUM1060)
+            .build();
+    LargeOpenEnumParent.Builder roundTripBuilder = LargeOpenEnumParent.newBuilder();
+    for (Map.Entry<FieldDescriptor, Object> entry : msg.getAllFields().entrySet()) {
+      roundTripBuilder.setField(entry.getKey(), entry.getValue());
+    }
+    LargeOpenEnumParent roundTrip = roundTripBuilder.build();
+    assertThat(roundTrip.getEList()).isEqualTo(msg.getEList());
+  }
 
   @Test
   public void testOpenLargeEnum() throws Exception {
@@ -27,6 +58,7 @@ public class LargeEnumTest {
               LargeOpenEnum.LARGE_ENUM_UNSPECIFIED,
               LargeOpenEnum.LARGE_ENUM1,
               LargeOpenEnum.LARGE_ENUM2,
+              LargeOpenEnum.LARGE_ENUM2_ALIAS,
               LargeOpenEnum.LARGE_ENUM3,
               LargeOpenEnum.LARGE_ENUM4,
               LargeOpenEnum.LARGE_ENUM5,
@@ -2025,6 +2057,7 @@ public class LargeEnumTest {
               LargeOpenEnum.LARGE_ENUM1998,
               LargeOpenEnum.LARGE_ENUM1999,
               LargeOpenEnum.LARGE_ENUM2000,
+              LargeOpenEnum.LARGE_ENUM1_ALIAS,
               LargeOpenEnum.UNRECOGNIZED
             });
   }

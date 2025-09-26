@@ -11,12 +11,24 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.protobuf.large.openenum.edition.LargeOpenEnum;
+import com.google.protobuf.large.openenum.edition.LargeOpenEnumParent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class LargeEnumLiteTest {
+  @Test
+  public void testLargeEnumRoundTrip() throws Exception {
+    LargeOpenEnumParent msg =
+        LargeOpenEnumParent.newBuilder()
+            .addE(LargeOpenEnum.LARGE_ENUM1)
+            .addE(LargeOpenEnum.LARGE_ENUM1_ALIAS)
+            .addE(LargeOpenEnum.LARGE_ENUM1060)
+            .build();
+    LargeOpenEnumParent roundTrip = LargeOpenEnumParent.parseFrom(msg.toByteArray());
+    assertThat(roundTrip.getEList()).isEqualTo(msg.getEList());
+  }
 
   @Test
   public void testOpenLargeEnum() throws Exception {
@@ -27,6 +39,7 @@ public class LargeEnumLiteTest {
               LargeOpenEnum.LARGE_ENUM_UNSPECIFIED,
               LargeOpenEnum.LARGE_ENUM1,
               LargeOpenEnum.LARGE_ENUM2,
+              LargeOpenEnum.LARGE_ENUM2_ALIAS,
               LargeOpenEnum.LARGE_ENUM3,
               LargeOpenEnum.LARGE_ENUM4,
               LargeOpenEnum.LARGE_ENUM5,
@@ -2025,6 +2038,7 @@ public class LargeEnumLiteTest {
               LargeOpenEnum.LARGE_ENUM1998,
               LargeOpenEnum.LARGE_ENUM1999,
               LargeOpenEnum.LARGE_ENUM2000,
+              LargeOpenEnum.LARGE_ENUM1_ALIAS,
               LargeOpenEnum.UNRECOGNIZED
             });
   }
