@@ -7,6 +7,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+    PIP_INDEX_URL: "https://:2022-09-14T00:00:00.000000Z@time-machines-pypi.sealsecurity.io/"
+
 jobs:
   build:
     name: Build Python artifacts on ${{ matrix.os }}
