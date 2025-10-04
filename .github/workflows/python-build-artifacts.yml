@@ -14,15 +14,12 @@ jobs:
   maynlinux:
     name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.container }}
     runs-on: ${{ matrix.os }}
-    container: 
-      image: ${{ matrix.container }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
             script: kokoro/release/python/linux/build_artifacts.sh
-            container: quay.io/pypa/manylinux2010_x86_64:2021-09-27-ed30de0
         #   - os: macos-latest
         #     script: kokoro/release/python/macos/build_artifacts.sh
         #     shell: bash
@@ -32,13 +29,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.6'      
     
     #   - name: Install dependencies
     #     run: |
-    #       apt-get update
-    #       apt-get install -y build-essential autoconf libtool pkg-config
-    #       python -m pip install -U virtualenv pip setuptools wheel
+    #       # apt-get update
+    #       # apt-get install -y build-essential autoconf libtool pkg-config
+    #       python3 -m pip install -U virtualenv pip setuptools wheel
 
       - name: Run build script (Bash)
         run: |
@@ -47,4 +49,4 @@ jobs:
             python -m pip install -U virtualenv pip setuptools wheel
             bash ${{ matrix.script }}
         env:
-            PYTHON_EXE: /opt/python/cp36-cp36m/bin/python
+            PYTHON_EXE: python3
