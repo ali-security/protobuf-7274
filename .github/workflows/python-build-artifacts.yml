@@ -42,8 +42,8 @@ jobs:
 
       - name: Run build script (Bash)
         run: |
+            export PATH=/opt/python/cp36-cp36m/bin/:${PATH}
             $PYTHON_EXE -m pip install -U virtualenv pip setuptools wheel
             bash ${{ matrix.script }}
         env:
             PYTHON_EXE: /opt/python/cp36-cp36m/bin/python
-            PATH: /opt/python/cp36-cp36m/bin/:${PATH}
