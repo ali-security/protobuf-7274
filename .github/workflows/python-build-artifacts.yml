@@ -50,3 +50,5 @@ jobs:
             bash ${{ matrix.script }}
         env:
             PYTHON_EXE: python3
+            DOCKER_IMAGE: quay.io/pypa/manylinux2010_x86_64:2021-09-27-ed30de0
+
