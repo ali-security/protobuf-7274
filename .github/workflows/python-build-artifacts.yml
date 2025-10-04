@@ -23,7 +23,7 @@ jobs:
           - os: ubuntu-latest
             script: kokoro/release/python/linux/build_artifacts.sh
             shell: bash
-            container: quay.io/pypa/manylinux_2_17_x86_64
+            container: quay.io/pypa/manylinux2014_x86_64
         #   - os: macos-latest
         #     script: kokoro/release/python/macos/build_artifacts.sh
         #     shell: bash
