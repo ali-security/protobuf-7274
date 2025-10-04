@@ -11,9 +11,11 @@ env:
     PIP_INDEX_URL: "https://:2022-09-14T00:00:00.000000Z@time-machines-pypi.sealsecurity.io/"
 
 jobs:
-  build:
-    name: Build Python artifacts on ${{ matrix.os }}
+  maynlinux:
+    name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.container }}
     runs-on: ${{ matrix.os }}
+    container: 
+      image: ${{ matrix.container }}
     strategy:
       fail-fast: false
       matrix:
@@ -21,12 +23,13 @@ jobs:
           - os: ubuntu-latest
             script: kokoro/release/python/linux/build_artifacts.sh
             shell: bash
-          - os: macos-latest
-            script: kokoro/release/python/macos/build_artifacts.sh
-            shell: bash
-          - os: windows-latest
-            script: kokoro/release/python/windows/build_artifacts.bat
-            shell: cmd
+            container: quay.io/pypa/manylinux_2_17_x86_64
+        #   - os: macos-latest
+        #     script: kokoro/release/python/macos/build_artifacts.sh
+        #     shell: bash
+        #   - os: windows-latest
+        #     script: kokoro/release/python/windows/build_artifacts.bat
+        #     shell: cmd
 
     steps:
       - name: Checkout code
