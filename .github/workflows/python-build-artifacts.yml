@@ -2,9 +2,7 @@ name: Python Build Artifacts
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "*" ]
   workflow_dispatch:
 
 env:
@@ -62,9 +60,36 @@ jobs:
 #           name: python-wheels-${{ runner.os }}-${{ matrix.image }}
 #           path: artifacts
 
-  macos:
-    name: Build Python artifacts on macos
-    runs-on: macos-latest
+#   macos:
+#     name: Build Python artifacts on macos
+#     runs-on: macos-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Set up Python
+#         uses: MatteoH2O1999/setup-python@v4
+#         with:
+#           python-version: '3.7' # Only used to run the build script
+
+#       - name: Run build script (Bash)
+#         run: |
+#             $PYTHON_EXE -m venv .venv
+#             source .venv/bin/activate
+#             python -m pip install -U virtualenv
+#             bash kokoro/release/python/macos/build_artifacts.sh
+#         env:
+#             PYTHON_EXE: python3
+
+#       - name: Upload artifacts
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: python-wheels-${{ runner.os }}
+#           path: artifacts
+
+  windows:
+    name: Build Python artifacts on windows
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -72,19 +97,13 @@ jobs:
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
-          python-version: '3.7' # Only used to run the build script
+          python-version: '3.6' # Only used to run the build script
 
       - name: Run build script (Bash)
         run: |
             $PYTHON_EXE -m venv .venv
             source .venv/bin/activate
             python -m pip install -U virtualenv
-            bash kokoro/release/python/macos/build_artifacts.sh
+            bash kokoro/release/python/windows/build_artifacts.bat
         env:
             PYTHON_EXE: python3
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-wheels-${{ runner.os }}
-          path: artifacts
