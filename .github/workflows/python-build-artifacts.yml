@@ -100,25 +100,10 @@ jobs:
       - name: Add MSVC v140 component to VS 2022
         shell: pwsh
         run: |
-            $vs = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
-            -products * -requires Microsoft.Component.MSBuild -property installationPath
-            if (-not $vs) { throw "VS installation not found" }
-
-            $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-
-            $args = @(
-            'modify',
-            '--installPath', "$vs",
-            '--add', 'Microsoft.VisualStudio.Component.VC.140',
-            '--norestart',
-            '--quiet'       # optional, remove if you want UI style progress
-            )
-
-            Write-Host "Invoking: $installer $($args -join ' ')"
-
-            $p = Start-Process -FilePath $installer `
-            -ArgumentList $args `
-            -NoNewWindow -Wait -PassThru `
+            $url = "https://download.microsoft.com/download/e/e/d/eedf18a8-4aed-4ce0-bebe-70a83094fc5a/BuildTools_Full.exe"
+            $exe = "$env:RUNNER_TEMP\vs2015_buildtools.exe"
+            Invoke-WebRequest $url -OutFile $exe
+            & $exe /Quiet /NoRestart
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
