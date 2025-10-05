@@ -61,7 +61,7 @@ jobs:
 #           path: artifacts
 
   macos:
-    name: Build Python artifacts on macos
+    name: Build Python artifacts on macos ${{ matrix.python-version }}
     runs-on: macos-latest
     strategy:
       fail-fast: false

@@ -23,13 +23,6 @@ function install_virtualenv {
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
-    pushd python
-    which python
-    echo $PATH
-    python --version
-    python -m pip --version
-    python -m pip list
-    popd
     pushd protobuf
 
     # Build protoc
