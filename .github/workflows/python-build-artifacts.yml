@@ -111,7 +111,9 @@ jobs:
             '--installPath', "$vs",
             '--add', 'Microsoft.VisualStudio.Component.VC.140',
             '--norestart',
-            '--wait'          # keep process attached to console until it exits
+            '--quiet',        # optional, remove if you want UI style progress
+            '--wait',          # keep process attached to console until it exits
+            "--help"
             )
 
             Write-Host "Invoking: $installer $($args -join ' ')"
