@@ -72,6 +72,10 @@ jobs:
           curl https://www.python.org/ftp/python/3.6.8/python-3.6.8rc1-macosx10.9.pkg -o python.pkg
           sudo installer -pkg python.pkg -target /
 
+      - name: Install dependencies
+        run: |
+          brew install autoconf automake libtool
+
       - name: Run build script (Bash)
         run: |
             $PYTHON_EXE -m venv venv
