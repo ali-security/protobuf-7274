@@ -99,6 +99,9 @@ jobs:
         with:
           python-version: '3.6' # Only used to run the build script
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
       - name: Run build script (Bash)
         run: |
             python3.exe -m venv .venv
