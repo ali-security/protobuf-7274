@@ -94,9 +94,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       # Make sure MSBuild/VS env is on PATH (VS 2022 is preinstalled)
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-      # Try to add the v140 toolset into the preinstalled VS 2022
       - name: Add MSVC v140 component to VS 2022
         shell: pwsh
         run: |
