@@ -100,5 +100,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ runner.os }}
+          name: python-wheels-${{ runner.os }}-${{ matrix.python-version }}
           path: artifacts
