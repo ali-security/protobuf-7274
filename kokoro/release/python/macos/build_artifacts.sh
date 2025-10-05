@@ -29,6 +29,7 @@ git clone https://github.com/matthew-brett/multibuild.git
 cp kokoro/release/python/macos/config.sh config.sh
 
 OLD_PATH=$PATH
+echo "!!!OLD_PATH: $OLD_PATH"
 
 build_artifact_version() {
   MB_PYTHON_VERSION=$1
