@@ -103,6 +103,8 @@ jobs:
             --installPath $vsPath `
             --add Microsoft.VisualStudio.Component.VC.140 `
             --quiet --wait --norestart
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
