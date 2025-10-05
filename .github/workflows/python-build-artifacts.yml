@@ -69,7 +69,7 @@ jobs:
 
       - name: Setup python
         run: |
-          curl https://www.python.org/ftp/python/3.6.8/python-3.6.8rc1-macosx10.9.pkg -o python.pkg
+          curl https://www.python.org/ftp/python/3.6.8/python-3.6.8-macosx10.9.pkg -o python.pkg
           sudo installer -pkg python.pkg -target /
 
       - name: Install dependencies
@@ -83,7 +83,7 @@ jobs:
             python -m pip install -U virtualenv pip wheel setuptools
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
-            PYTHON_EXE: /Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+            PYTHON_EXE: /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
