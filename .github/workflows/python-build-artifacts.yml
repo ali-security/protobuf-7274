@@ -97,7 +97,7 @@ jobs:
           python-version: '3.6' # Only used to run the build script
       - name: Run build script (Bash)
         run: |
-            cd protobuf/python
+            cd python
             python3 -m pip install -U virtualenv pip wheel setuptools
             python3 setup.py clean build bdist_wheel
       - name: Upload artifacts
