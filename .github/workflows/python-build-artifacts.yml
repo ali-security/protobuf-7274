@@ -89,26 +89,14 @@ jobs:
 
   windows:
     name: Build Python artifacts on windows
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       # Make sure MSBuild/VS env is on PATH (VS 2022 is preinstalled)
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
-      # Try to add the v140 toolset into the preinstalled VS 2022
-      - name: Add MSVC v140 component to VS 2022
-        shell: pwsh
-        run: |
-          $vs = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -products * -requires Microsoft.Component.MSBuild -property installationPath
-          if (-not $vs) { throw "VS installation not found" }
-          $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-          & $installer modify `
-            --installPath "$vs" `
-            --add Microsoft.VisualStudio.Component.VC.140 `
-            --quiet --norestart
-          if ($LASTEXITCODE -ne 0) { throw "Failed to install v140 component" }
-
+        
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
