@@ -12,7 +12,7 @@ env:
 
 jobs:
   maynlinux:
-    name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.container }}
+    name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.image }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -20,6 +20,13 @@ jobs:
         include:
           - os: ubuntu-latest
             script: kokoro/release/python/linux/build_artifacts.sh
+            image: quay.io/pypa/manylinux2010_x86_64:2021-09-27-ed30de0
+          - os: ubuntu-latest
+            script: kokoro/release/python/linux/build_artifacts.sh
+            image: quay.io/pypa/manylinux2014_x86_64:2021-09-27-ed30de0
+          - os: ubuntu-latest
+            script: kokoro/release/python/linux/build_artifacts.sh
+            image: quay.io/pypa/manylinux_2_24_x86_64:2021-09-27-ed30de0
         #   - os: macos-latest
         #     script: kokoro/release/python/macos/build_artifacts.sh
         #     shell: bash
@@ -34,20 +41,20 @@ jobs:
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
-          python-version: '3.6'      
+          python-version: '3.12' # Only used to run the build script
     
       - name: Run build script (Bash)
         run: |
             $PYTHON_EXE -m venv .venv
             source .venv/bin/activate
-            python -m pip install -U virtualenv pip setuptools wheel
+            python -m pip install -U virtualenv
             bash ${{ matrix.script }}
         env:
             PYTHON_EXE: python3
-            DOCKER_IMAGE: quay.io/pypa/manylinux2010_x86_64:2021-09-27-ed30de0
+            DOCKER_IMAGE: ${{ matrix.image }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ runner.os }}-${{ runner.arch }}
+          name: python-wheels-${{ runner.os }}-${{ matrix.image }}
           path: artifacts
