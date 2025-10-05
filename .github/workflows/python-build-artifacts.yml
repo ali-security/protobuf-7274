@@ -90,7 +90,8 @@ jobs:
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.19.5/protoc-3.19.5-linux-x86_64.zip
           unzip protoc-3.19.5-linux-x86_64.zip -d protoc
-          export PATH=$PATH:$(pwd)/protoc/bin
+          cp protoc/bin/* src/protoc
+          cp protoc/lib/* src/
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
