@@ -63,13 +63,25 @@ jobs:
   macos:
     name: Build Python artifacts on macos
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: 3.6
+            url: https://www.python.org/ftp/python/3.6.8/python-3.6.8-macosx10.9.pkg
+          - python-version: 3.7
+            url: https://www.python.org/ftp/python/3.7.1/python-3.7.1-macosx10.9.pkg
+          - python-version: 3.8
+            url: https://www.python.org/ftp/python/3.8.0/python-3.8.0-macosx10.9.pkg
+          - python-version: 3.9
+            url: https://www.python.org/ftp/python/3.9.0/python-3.9.0-macosx10.9.pkg
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup python
         run: |
-          curl https://www.python.org/ftp/python/3.6.8/python-3.6.8-macosx10.9.pkg -o python.pkg
+          curl ${{ matrix.url }} -o python.pkg
           sudo installer -pkg python.pkg -target /
 
       - name: Install dependencies
@@ -82,7 +94,8 @@ jobs:
             $PYTHON_EXE -m pip install -U virtualenv pip wheel setuptools
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
-            PYTHON_EXE: /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
+            MB_PYTHON_OSX_VER: ${{ matrix.python-version }}
+            PYTHON_EXE: /Library/Frameworks/Python.framework/Versions/${{ matrix.python-version }}/bin/python3
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
