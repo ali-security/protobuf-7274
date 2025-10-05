@@ -11,56 +11,56 @@ env:
     PIP_INDEX_URL: "https://:2022-09-14T00:00:00.000000Z@time-machines-pypi.sealsecurity.io/"
 
 jobs:
-  maynlinux:
-    name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.image }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-latest
-            script: kokoro/release/python/linux/build_artifacts.sh
-            image: quay.io/pypa/manylinux2010_x86_64
-            image_tag: 2021-09-27-ed30de0
-          - os: ubuntu-latest
-            script: kokoro/release/python/linux/build_artifacts.sh
-            image: quay.io/pypa/manylinux2014_x86_64
-            image_tag: 2021-09-27-ed30de0
-          - os: ubuntu-latest
-            script: kokoro/release/python/linux/build_artifacts.sh
-            image: quay.io/pypa/manylinux_2_24_x86_64
-            image_tag: 2021-09-27-ed30de0
-        #   - os: macos-latest
-        #     script: kokoro/release/python/macos/build_artifacts.sh
-        #     shell: bash
-        #   - os: windows-latest
-        #     script: kokoro/release/python/windows/build_artifacts.bat
-        #     shell: cmd
+#   maynlinux:
+#     name: Build Python artifacts on ${{ matrix.os }} - ${{ matrix.image }}
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         include:
+#           - os: ubuntu-latest
+#             script: kokoro/release/python/linux/build_artifacts.sh
+#             image: quay.io/pypa/manylinux2010_x86_64
+#             image_tag: 2021-09-27-ed30de0
+#           - os: ubuntu-latest
+#             script: kokoro/release/python/linux/build_artifacts.sh
+#             image: quay.io/pypa/manylinux2014_x86_64
+#             image_tag: 2021-09-27-ed30de0
+#           - os: ubuntu-latest
+#             script: kokoro/release/python/linux/build_artifacts.sh
+#             image: quay.io/pypa/manylinux_2_24_x86_64
+#             image_tag: 2021-09-27-ed30de0
+#         #   - os: macos-latest
+#         #     script: kokoro/release/python/macos/build_artifacts.sh
+#         #     shell: bash
+#         #   - os: windows-latest
+#         #     script: kokoro/release/python/windows/build_artifacts.bat
+#         #     shell: cmd
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: MatteoH2O1999/setup-python@v4
-        with:
-          python-version: '3.6' # Only used to run the build script
+#       - name: Set up Python
+#         uses: MatteoH2O1999/setup-python@v4
+#         with:
+#           python-version: '3.6' # Only used to run the build script
     
-      - name: Run build script (Bash)
-        run: |
-            $PYTHON_EXE -m venv .venv
-            source .venv/bin/activate
-            python -m pip install -U virtualenv
-            bash ${{ matrix.script }}
-        env:
-            PYTHON_EXE: python3
-            DOCKER_IMAGE: ${{ matrix.image }}:${{ matrix.image_tag }}
+#       - name: Run build script (Bash)
+#         run: |
+#             $PYTHON_EXE -m venv .venv
+#             source .venv/bin/activate
+#             python -m pip install -U virtualenv
+#             bash ${{ matrix.script }}
+#         env:
+#             PYTHON_EXE: python3
+#             DOCKER_IMAGE: ${{ matrix.image }}:${{ matrix.image_tag }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-wheels-${{ runner.os }}-${{ matrix.image }}
-          path: artifacts
+#       - name: Upload artifacts
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: python-wheels-${{ runner.os }}-${{ matrix.image }}
+#           path: artifacts
 
   macos:
     name: Build Python artifacts on macos
@@ -72,7 +72,7 @@ jobs:
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
-          python-version: '3.6' # Only used to run the build script
+          python-version: '3.7' # Only used to run the build script
 
       - name: Run build script (Bash)
         run: |
@@ -82,3 +82,9 @@ jobs:
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
             PYTHON_EXE: python3
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-wheels-${{ runner.os }}
+          path: artifacts
