@@ -102,7 +102,14 @@ jobs:
             & $installerPath modify `
             --installPath $vsPath `
             --add Microsoft.VisualStudio.Component.VC.140 `
+            --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core `
             --quiet --wait --norestart
+
+            Write-Host "Verifying v140 installation..."
+            $v140Path = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC"
+            if (Test-Path $v140Path) {
+                Get-ChildItem $v140Path
+            }
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
       - name: Set up Python
