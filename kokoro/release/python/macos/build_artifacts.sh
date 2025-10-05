@@ -46,7 +46,6 @@ build_artifact_version() {
   $PIP_CMD install virtualenv
   VIRTUALENV_CMD="$(dirname $PYTHON_EXE)/virtualenv"
   export PATH="`dirname $PYTHON_EXE`:$PATH"
-  python -m pip install -U pip wheel setuptools
 
   clean_code $REPO_DIR $BUILD_COMMIT
 
