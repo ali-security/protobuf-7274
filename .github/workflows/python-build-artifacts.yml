@@ -93,12 +93,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Download Visual C++ Build Tools 2015
-        run: |
-          Invoke-WebRequest -Uri "https://download.microsoft.com/download/C/C/A/CCA79427-0B0B-4813-9481-19B4C79B0A7B/BuildTools_Full.exe" -OutFile "BuildTools_Full.exe"
-          .\BuildTools_Full.exe /install /quiet /norestart
+      # Make sure MSBuild/VS env is on PATH (VS 2022 is preinstalled)
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
+      # Try to add the v140 toolset into the preinstalled VS 2022
+      - name: Add MSVC v140 component to VS 2022
+        shell: pwsh
+        run: |
+          $vs = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -products * -requires Microsoft.Component.MSBuild -property installationPath
+          if (-not $vs) { throw "VS installation not found" }
+          $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
+          & $installer modify `
+            --installPath "$vs" `
+            --add Microsoft.VisualStudio.Component.VC.140 `
+            --quiet --norestart
+          if ($LASTEXITCODE -ne 0) { throw "Failed to install v140 component" }
+
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
