@@ -41,7 +41,7 @@ build_artifact_version() {
 
   source multibuild/common_utils.sh
   source multibuild/travis_steps.sh
-  before_install
+  # before_install
 
   clean_code $REPO_DIR $BUILD_COMMIT
 

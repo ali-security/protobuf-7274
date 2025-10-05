@@ -74,9 +74,9 @@ jobs:
 
       - name: Run build script (Bash)
         run: |
-            $PYTHON_EXE -m venv .venv
-            source .venv/bin/activate
-            python -m pip install -U virtualenv
+            $PYTHON_EXE -m venv venv
+            source venv/bin/activate
+            python -m pip install -U virtualenv pip wheel
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
             PYTHON_EXE: python3
