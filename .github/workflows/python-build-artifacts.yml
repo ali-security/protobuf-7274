@@ -93,10 +93,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
-        with:
-          vs-version: '[14,17)'
+      - name: Add v140 toolset to VS 2022
+        shell: pwsh
+        run: |
+          $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vsPath = & $vsWhere -latest -property installationPath
+          & "$vsPath\..\..\Installer\vs_installer.exe" modify `
+            --installPath "$vsPath" `
+            --add Microsoft.VisualStudio.Component.VC.v141.x86.x64 `
+            --add Microsoft.VisualStudio.Component.VC.140 `
+            --quiet --wait
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
