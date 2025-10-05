@@ -96,13 +96,13 @@ jobs:
       - name: Add v140 toolset to VS 2022
         shell: pwsh
         run: |
-          $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-          $vsPath = & $vsWhere -latest -property installationPath
-          & "$vsPath\..\..\Installer\vs_installer.exe" modify `
-            --installPath "$vsPath" `
-            --add Microsoft.VisualStudio.Component.VC.v141.x86.x64 `
+            $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
+            $vsPath = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
+            
+            & $installerPath modify `
+            --installPath $vsPath `
             --add Microsoft.VisualStudio.Component.VC.140 `
-            --quiet --wait
+            --quiet --wait --norestart
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
