@@ -109,9 +109,8 @@ jobs:
             $args = @(
             'modify',
             '--installPath', "$vs",
-            '--add', 'Microsoft.VisualStudio.Component.VC.140.x86.x64',
+            '--add', 'Microsoft.VisualStudio.Component.VC.140',
             '--norestart',
-            '--quiet',        # optional, remove if you want UI style progress
             '--wait'          # keep process attached to console until it exits
             )
 
