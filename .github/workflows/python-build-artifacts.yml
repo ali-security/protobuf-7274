@@ -67,10 +67,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: MatteoH2O1999/setup-python@v4
-        with:
-          python-version: '3.8' # Only used to run the build script
+      - name: Setup python
+        run: |
+          curl https://www.python.org/ftp/python/3.6.8/python-3.6.8rc1-macosx10.9.pkg -o python.pkg
+          sudo installer -pkg python.pkg -target /
 
       - name: Run build script (Bash)
         run: |
