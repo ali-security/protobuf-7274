@@ -78,6 +78,7 @@ jobs:
 
       - name: Run build script (Bash)
         run: |
+            ln -s `dirname $PYTHON_EXE`/python $PYTHON_EXE
             $PYTHON_EXE -m pip install -U virtualenv pip wheel setuptools
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
