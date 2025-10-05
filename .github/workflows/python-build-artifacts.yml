@@ -2,9 +2,7 @@ name: Python Build Artifacts
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "*" ]
   workflow_dispatch:
 
 env:
@@ -72,7 +70,7 @@ jobs:
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
-          python-version: '3.7' # Only used to run the build script
+          python-version: '3.8' # Only used to run the build script
 
       - name: Run build script (Bash)
         run: |
