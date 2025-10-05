@@ -116,23 +116,9 @@ jobs:
 
             Write-Host "Invoking: $installer $($args -join ' ')"
 
-            $out = Join-Path $env:RUNNER_TEMP 'vs_installer.out.txt'
-            $err = Join-Path $env:RUNNER_TEMP 'vs_installer.err.txt'
-
             $p = Start-Process -FilePath $installer `
             -ArgumentList $args `
             -NoNewWindow -Wait -PassThru `
-            -RedirectStandardOutput $out `
-            -RedirectStandardError $err
-
-            Write-Host "=== vs_installer stdout ==="
-            if (Test-Path $out) { Get-Content $out }
-
-            Write-Host "=== vs_installer stderr ==="
-            if (Test-Path $err) { Get-Content $err }
-
-            if ($p.ExitCode -ne 0) { throw "Failed to install v140 component. ExitCode=$($p.ExitCode)" }
-
       - name: Set up Python
         uses: MatteoH2O1999/setup-python@v4
         with:
