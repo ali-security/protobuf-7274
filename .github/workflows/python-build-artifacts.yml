@@ -80,7 +80,7 @@ jobs:
         run: |
             $PYTHON_EXE -m venv venv
             source venv/bin/activate
-            python -m pip install -U virtualenv pip wheel
+            python -m pip install -U virtualenv pip wheel setuptools
             bash kokoro/release/python/macos/build_artifacts.sh
         env:
             PYTHON_EXE: python3
