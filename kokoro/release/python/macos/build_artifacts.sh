@@ -42,7 +42,11 @@ build_artifact_version() {
   source multibuild/common_utils.sh
   source multibuild/travis_steps.sh
   # before_install
+  $PYTHON_EXE -m pip install virtualenv
+  VIRTUALENV_CMD="$(dirname $PYTHON_EXE)/virtualenv"
+  $VIRTUALENV_CMD venv
   source venv/bin/activate
+  python -m pip install -U pip wheel setuptools
 
   clean_code $REPO_DIR $BUILD_COMMIT
 
