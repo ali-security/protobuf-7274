@@ -18,16 +18,8 @@ jobs:
         include:
           - os: ubuntu-latest
             script: kokoro/release/python/linux/build_artifacts.sh
-            image: quay.io/pypa/manylinux2010_x86_64:2021-09-27-ed30de0
-            artifact_name: manylinux2010_x86_64
-          - os: ubuntu-latest
-            script: kokoro/release/python/linux/build_artifacts.sh
             image: quay.io/pypa/manylinux2014_x86_64:2021-09-27-ed30de0
             artifact_name: manylinux2014_x86_64
-          - os: ubuntu-latest
-            script: kokoro/release/python/linux/build_artifacts.sh
-            image: quay.io/pypa/manylinux_2_24_x86_64:2021-09-27-ed30de0
-            artifact_name: manylinux_2_24_x86_64
 
     steps:
       - name: Checkout code
