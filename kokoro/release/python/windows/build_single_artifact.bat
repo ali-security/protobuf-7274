@@ -55,6 +55,7 @@ mkdir src\.libs
 
 mkdir vcprojects
 pushd vcprojects
+dir "C:\Program Files (x86)\Windows Kits\10\Include\"
 cmake -G "%generator%" -A %vcplatform% -T v140 -DCMAKE_SYSTEM_VERSION=10.0.10240.0 -Dprotobuf_BUILD_SHARED_LIBS=%BUILD_DLL% -Dprotobuf_UNICODE=%UNICODE% -Dprotobuf_BUILD_TESTS=OFF ../cmake || goto :error
 msbuild protobuf.sln /p:Platform=%vcplatform% /p:Configuration=Release /p:WindowsTargetPlatformVersion=10.0.10240.0 || goto :error
 dir /s /b§
