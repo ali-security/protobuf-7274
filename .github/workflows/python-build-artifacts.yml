@@ -118,9 +118,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       # Make sure MSBuild/VS env is on PATH (VS 2022 is preinstalled)
-      - name: Install Visual Studio 2019
+      - name: Install Visual Studio 2017
         run: |
-          choco install visualstudio2017enterprise --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140" 
+          choco install visualstudio2017enterprise --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140 --add Microsoft.VisualStudio.Component.Windows10SDK.17763" 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
       - name: Set up Python

@@ -55,7 +55,7 @@ mkdir src\.libs
 
 mkdir vcprojects
 pushd vcprojects
-cmake -G "%generator%" -A %vcplatform% -T v140 -DCMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION=10.0.22621.0 -DCMAKE_SYSTEM_VERSION=10.0.22621.0 -Dprotobuf_BUILD_SHARED_LIBS=%BUILD_DLL% -Dprotobuf_UNICODE=%UNICODE% -Dprotobuf_BUILD_TESTS=OFF ../cmake || goto :error
+cmake -G "%generator%" -A %vcplatform% -T v140 -DCMAKE_SYSTEM_VERSION=10.0.17763.0 -Dprotobuf_BUILD_SHARED_LIBS=%BUILD_DLL% -Dprotobuf_UNICODE=%UNICODE% -Dprotobuf_BUILD_TESTS=OFF ../cmake || goto :error
 msbuild protobuf.sln /p:Platform=%vcplatform% /p:Configuration=Release || goto :error
 dir /s /b
 popd
