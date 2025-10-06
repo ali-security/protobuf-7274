@@ -120,7 +120,7 @@ jobs:
       # Make sure MSBuild/VS env is on PATH (VS 2022 is preinstalled)
       - name: Install Visual Studio 2019
         run: |
-          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140" 
+          choco install visualstudio2017enterprise --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140" 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
       - name: Set up Python
