@@ -105,7 +105,7 @@ jobs:
         run: |
             cd python
             python3 -m pip install -U virtualenv pip wheel setuptools
-            python3 setup.py clean build bdist_wheel
+            python3 setup.py clean build bdist_wheel sdist
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
