@@ -133,6 +133,12 @@ jobs:
             .venv\Scripts\Activate.ps1
             python.exe -m pip install -U virtualenv
             kokoro/release/python/windows/build_artifacts.bat
+      - name: Upload debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-wheels-${{ runner.os }}-debug
+          path: vcprojects
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
